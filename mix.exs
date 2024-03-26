@@ -37,7 +37,7 @@ defmodule Kanta.MixProject do
       {:expo, "~> 0.3"},
       {:ecto, "~> 3.10"},
       {:ecto_sql, "~> 3.10"},
-      {:phoenix, "~> 1.7.0"},
+      {:phoenix, "~> 1.7.11"},
       {:phoenix_view, "~> 2.0"},
       {:phoenix_live_view, "~> 0.20"},
       {:phoenix_html, "~> 4.0"},
