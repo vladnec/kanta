@@ -7,31 +7,13 @@ defmodule Kanta.Translations.Messages.Finders.GetMessage do
     module: Kanta.Translations.Message,
     binding: :message
 
-  alias Kanta.Cache
   alias Kanta.Repo
   alias Kanta.Translations.Message
 
   def find(params \\ []) do
-    cache_key = Cache.generate_cache_key("message", params)
-
-    with {:error, _, :not_cached} <- find_in_cache(cache_key),
-         {:ok, %Message{} = message} <- find_in_database(params) do
-      Cache.put(cache_key, message)
-
-      {:ok, message}
-    else
+    case find_in_database(params) do
       {:ok, %Message{} = message} -> {:ok, message}
       {:error, _, :not_found} -> {:error, :message, :not_found}
-    end
-  end
-
-  defp find_in_cache(cache_key) do
-    case Cache.get(cache_key) do
-      nil ->
-        {:error, :message, :not_cached}
-
-      cached_message ->
-        {:ok, cached_message}
     end
   end
 

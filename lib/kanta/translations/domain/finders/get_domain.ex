@@ -7,30 +7,12 @@ defmodule Kanta.Translations.Domains.Finders.GetDomain do
     module: Kanta.Translations.Domain,
     binding: :domain
 
-  alias Kanta.Cache
   alias Kanta.Translations.Domain
 
   def find(params \\ []) do
-    cache_key = Cache.generate_cache_key("domain", params)
-
-    with {:error, _, :not_cached} <- find_in_cache(cache_key),
-         {:ok, %Domain{} = domain} <- find_in_database(params) do
-      Cache.put(cache_key, domain)
-
-      {:ok, domain}
-    else
+    case find_in_database(params) do
       {:ok, %Domain{} = domain} -> {:ok, domain}
       {:error, _, :not_found} -> {:error, :domain, :not_found}
-    end
-  end
-
-  defp find_in_cache(cache_key) do
-    case Cache.get(cache_key) do
-      nil ->
-        {:error, :domain, :not_cached}
-
-      cached_domain ->
-        {:ok, cached_domain}
     end
   end
 

@@ -1,11 +1,5 @@
 import Config
 
-config :kanta, Kanta.Cache,
-  primary: [
-    gc_interval: :timer.hours(24),
-    backend: :shards
-  ]
-
 config :phoenix, :json_library, Jason
 config :phoenix, :stacktrace_depth, 20
 

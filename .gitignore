@@ -36,3 +36,5 @@ kanta-*.tar
 /.nix-mix/
 /.nix-hex/
 .DS_Store
+
+.idea/
